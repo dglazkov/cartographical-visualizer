@@ -1,41 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="force-graph.js"></script>
-    <style>
-        text {
-          cursor: pointer;
-          user-select: none;
-        }
-        
-    </style>
-  </head>
-  <body>
-      <script>
-        const data = {
-          nodes: [{ id: "Chrome Browser" }, { id: "Chrome Web Platform" }],
-          links: [
-            {
-              source: "Chrome Browser",
-              target: "Chrome Web Platform",
-              type: "accelerates"
-            },
-            {
-              source: "Chrome Web Platform",
-              target: "Chrome Browser",
-              type: "attenuates"
-            }
-          ]
-        };
 
-        const svg_node = forceGraph(data, {
-          height: window.innerHeight,
-          width: window.innerWidth
-        });
+<head>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="force-graph.js"></script>
+  <style>
+    text {
+      cursor: pointer;
+      user-select: none;
+    }
+  </style>
+</head>
 
-        document.body.appendChild(svg_node);
+<body>
+  <script type="module">
+    import { data } from './dummy-data.js';
 
-      </script>
-  </body>
+    const svg_node = forceGraph(data, {
+      height: window.innerHeight,
+      width: window.innerWidth
+    });
+
+    document.body.appendChild(svg_node);
+
+  </script>
+</body>
+
 </html>
