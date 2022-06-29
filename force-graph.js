@@ -1,49 +1,49 @@
+const NODE_RADIUS = 5;
+
+const linkArc = (d) => {
+  const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
+  return `
+            M${d.source.x},${d.source.y}
+            A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
+          `;
+};
+
+const drag = (simulation) => {
+  function dragstarted(event, d) {
+    if (!event.active) simulation.alphaTarget(0.3).restart();
+    d.fx = d.x;
+    d.fy = d.y;
+  }
+
+  function dragged(event, d) {
+    d.fx = event.x;
+    d.fy = event.y;
+  }
+
+  function dragended(event, d) {
+    if (!event.active) simulation.alphaTarget(0);
+    d.fx = null;
+    d.fy = null;
+  }
+
+  return d3
+    .drag()
+    .on("start", dragstarted)
+    .on("drag", dragged)
+    .on("end", dragended);
+};
+
 function forceGraph(data, { width, height }) {
+
   const links = data.links;
   const nodes = data.nodes;
   const types = Array.from(new Set(links.map(l => l.type)));
   const color = d3.scaleOrdinal(types, d3.schemeCategory10);
 
-  const linkArc = (d) => {
-    const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
-    return `
-              M${d.source.x},${d.source.y}
-              A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
-            `;
-  };
-
-  const drag = (simulation) => {
-    function dragstarted(event, d) {
-      if (!event.active) simulation.alphaTarget(0.3).restart();
-      d.fx = d.x;
-      d.fy = d.y;
-    }
-
-    function dragged(event, d) {
-      d.fx = event.x;
-      d.fy = event.y;
-    }
-
-    function dragended(event, d) {
-      if (!event.active) simulation.alphaTarget(0);
-      d.fx = null;
-      d.fy = null;
-    }
-
-    return d3
-      .drag()
-      .on("start", dragstarted)
-      .on("drag", dragged)
-      .on("end", dragended);
-  };  
-  
   const simulation = d3
     .forceSimulation(nodes)
-    .force(
-      "link",
-      d3.forceLink(links).id((d) => d.id)
-    )
-    .force("charge", d3.forceManyBody().strength(-400))
+    .force("link", d3.forceLink(links).id((d) => d.id).distance(100))
+    .force("charge", d3.forceManyBody().strength(-300))
     .force("x", d3.forceX())
     .force("y", d3.forceY());
 
@@ -52,7 +52,6 @@ function forceGraph(data, { width, height }) {
     .attr("viewBox", [-width / 2, -height / 2, width, height])
     .style("font", "12px sans-serif");
 
-  // Per-type markers, as they don't inherit styles.
   svg
     .append("defs")
     .selectAll("marker")
@@ -76,8 +75,8 @@ function forceGraph(data, { width, height }) {
     .selectAll("path")
     .data(links)
     .join("path")
-    .attr("stroke", (d) => color(d.type))
-    .attr("marker-end", (d) => `url(${new URL(`#arrow-${d.type}`, location)})`);
+    .attr("stroke", d => color(d.type))
+    .attr("marker-end", d => `url(${new URL(`#arrow-${d.type}`, location)})`);
 
   const node = svg
     .append("g")
@@ -93,7 +92,7 @@ function forceGraph(data, { width, height }) {
     .append("circle")
     .attr("stroke", "white")
     .attr("stroke-width", 1.5)
-    .attr("r", 4);
+    .attr("r", NODE_RADIUS);
 
   node
     .append("text")
@@ -107,9 +106,28 @@ function forceGraph(data, { width, height }) {
     .attr("stroke-width", 3);
 
   simulation.on("tick", () => {
+
+    const setX = d => {
+      const x = d.x + width / 2; 
+      return d.x = Math.max(
+        NODE_RADIUS, 
+        Math.min(width - NODE_RADIUS, x)) - width / 2; 
+    };
+    const setY = d => { 
+      const y = d.y + height / 2; 
+      return d.y = Math.max(
+        NODE_RADIUS,
+        Math.min(height - NODE_RADIUS, y)) - height / 2;
+    };
+
+    node
+      .attr("transform", (d) => `translate(${setX(d)},${setY(d)})`);
+
     link.attr("d", linkArc);
-    node.attr("transform", (d) => `translate(${d.x},${d.y})`);
+
   });
 
   return svg.node();
 }
+
+export { forceGraph };

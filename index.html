@@ -3,7 +3,6 @@
 
 <head>
   <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="force-graph.js"></script>
   <style>
     text {
       cursor: pointer;
@@ -15,10 +14,11 @@
 <body>
   <script type="module">
     import { data } from './dummy-data.js';
+    import { forceGraph } from './force-graph.js';
 
     const svg_node = forceGraph(data, {
       height: window.innerHeight,
-      width: window.innerWidth
+      width: window.innerWidth,
     });
 
     document.body.appendChild(svg_node);
