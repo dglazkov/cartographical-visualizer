@@ -10,6 +10,9 @@ const data = {
     { source: "one", target: "two", type: "accelerates" },
     { source: "two", target: "one", type: "attenuates" },
     { source: "four", target: "one", type: "attenuates" },
+    { source: "four", target: "three", type: "accelerates" },
+    { source: "five", target: "one", type: "accelerates" },
+    { source: "three", target: "three", type: "attenuates" },
   ]
 };
 

@@ -1,11 +1,18 @@
 const NODE_RADIUS = 5;
+const LOOP_RADIUS = 25;
 
 const linkArc = (d) => {
-  const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
+  const is_loop = d.target == d.source;
+  const radius = is_loop ? LOOP_RADIUS : Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
+  const large_arc_flag = Number(is_loop);
+  const target_y = d.target.y - large_arc_flag;
   return `
-            M${d.source.x},${d.source.y}
-            A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
-          `;
+    M ${d.source.x},${d.source.y}
+    A
+      ${radius}, ${radius} 
+      0 ${large_arc_flag} 1 
+      ${d.target.x},${target_y}
+  `;
 };
 
 const drag = (simulation) => {
@@ -42,7 +49,7 @@ function forceGraph(data, { width, height }) {
 
   const simulation = d3
     .forceSimulation(nodes)
-    .force("link", d3.forceLink(links).id((d) => d.id).distance(100))
+    .force("link", d3.forceLink(links).id((d) => d.id))
     .force("charge", d3.forceManyBody().strength(-300))
     .force("x", d3.forceX())
     .force("y", d3.forceY());
