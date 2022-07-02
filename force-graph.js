@@ -1,18 +1,18 @@
 import * as d3 from "https://cdn.skypack.dev/d3@7";
 
 const NODE_RADIUS = 6;
-const LOOP_RADIUS = 25;
+const LOOP_RADIUS = 35;
 
 const linkArc = (d) => {
   const is_loop = d.target == d.source;
   const radius = is_loop ? LOOP_RADIUS : Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
-  // the tiny "- .1" is there to make the arc not be closed when it's a self-loop.
+  // the "- 1" is there to make the arc not be closed when it's a self-loop.
   return `
     M ${d.source.x},${d.source.y}
     A
       ${radius}, ${radius} 
       0 ${Number(is_loop)} 1 
-      ${d.target.x},${d.target.y - .1}
+      ${d.target.x},${d.target.y - 1}
   `;
 };
 
@@ -45,7 +45,7 @@ function forceGraph(data, { width, height }) {
   const simulation = d3
     .forceSimulation(nodes)
     .force("link", d3.forceLink(links).id((d) => d.id))
-    .force("charge", d3.forceManyBody().strength(-300))
+    .force("charge", d3.forceManyBody().strength(-500))
     .force("x", d3.forceX())
     .force("y", d3.forceY());
 
@@ -60,15 +60,15 @@ function forceGraph(data, { width, height }) {
     .data(types)
     .join("marker")
     .attr("id", (d) => `arrow-${d}`)
-    .attr("viewBox", "0 -5 10 10")
-    .attr("refX", 15)
+    .attr("viewBox", "0 -6 10 12")
+    .attr("refX", 11 + NODE_RADIUS)
     .attr("refY", -0.5)
     .attr("markerWidth", NODE_RADIUS)
     .attr("markerHeight", NODE_RADIUS)
     .attr("orient", "auto")
     .append("path")
     .attr("fill", color)
-    .attr("d", "M0,-5 L10,0 L0,5 L3,0");
+    .attr("d", "M0,-6 L10,0 L0,6 L3,0");
 
   const link = svg
     .append("g")
