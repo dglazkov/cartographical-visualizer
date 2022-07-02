@@ -118,13 +118,13 @@ function forceGraph(data, { width, height }) {
   simulation.on("tick", () => {
 
     const setX = d => {
-      const x = d.x + width / 2; 
+      const x = d.x + width / 2;
       return d.x = Math.max(
-        NODE_RADIUS, 
-        Math.min(width - NODE_RADIUS, x)) - width / 2; 
+        NODE_RADIUS,
+        Math.min(width - NODE_RADIUS, x)) - width / 2;
     };
-    const setY = d => { 
-      const y = d.y + height / 2; 
+    const setY = d => {
+      const y = d.y + height / 2;
       return d.y = Math.max(
         NODE_RADIUS,
         Math.min(height - NODE_RADIUS, y)) - height / 2;
@@ -140,4 +140,26 @@ function forceGraph(data, { width, height }) {
   return svg.node();
 }
 
-export { forceGraph };
+class GraphElement extends HTMLElement {
+  constructor() {
+    super();
+
+  }
+
+  draw(data) {
+    // only works once for now.
+    if (this.shadowRoot)
+      return;
+
+    const shadow = this.attachShadow({ mode: 'open' });
+
+    const svg_node = forceGraph(data, {
+      height: 400,
+      width: 400,
+    });
+
+    shadow.appendChild(svg_node);
+  }
+}
+
+customElements.define("carto-graph", GraphElement);

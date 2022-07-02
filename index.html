@@ -8,19 +8,15 @@
       user-select: none;
     }
   </style>
+  <script type="module" src="carto-graph.js"></script>
 </head>
 
 <body>
+  <carto-graph></carto-graph>
   <script type="module">
     import { data } from './dummy-data.js';
-    import { forceGraph } from './force-graph.js';
 
-    const svg_node = forceGraph(data, {
-      height: 400,
-      width: 400,
-    });
-
-    document.body.appendChild(svg_node);
+    document.querySelector('carto-graph').draw(data);
 
   </script>
 </body>
