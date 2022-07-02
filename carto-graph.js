@@ -2,6 +2,14 @@ import * as d3 from "https://cdn.skypack.dev/d3@7";
 
 const NODE_RADIUS = 6;
 const LOOP_RADIUS = 35;
+const LINK_COLORS = {
+  'accelerates': 'green',
+  'attenuates': 'red',
+};
+const NODE_COLORS = {
+  'ecosystem': 'blue',
+  'product': 'gray',
+}
 
 const linkArc = (d) => {
   const is_loop = d.target == d.source;
@@ -41,8 +49,8 @@ function forceGraph(data, { width, height }) {
   const nodes = data.nodes;
   const linkTypes = Array.from(new Set(links.map(l => l.type)));
   const nodeTypes = Array.from(new Set(nodes.map(n => n.type)));
-  const linkColor = d3.scaleOrdinal(linkTypes, ['green', 'red']);
-  const nodeColor = d3.scaleOrdinal(nodeTypes, ['gray', 'blue']);
+  const linkColor = t => LINK_COLORS[t];
+  const nodeColor = t => NODE_COLORS[t];
 
   const simulation = d3
     .forceSimulation(nodes)
