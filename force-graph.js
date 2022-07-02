@@ -1,6 +1,6 @@
 import * as d3 from "https://cdn.skypack.dev/d3@7";
 
-const NODE_RADIUS = 5;
+const NODE_RADIUS = 6;
 const LOOP_RADIUS = 25;
 
 const linkArc = (d) => {
@@ -96,6 +96,14 @@ function forceGraph(data, { width, height }) {
     .attr("stroke", "white")
     .attr("stroke-width", 1.5)
     .attr("r", NODE_RADIUS);
+
+  node
+    .append("circle")
+    .attr("stroke", "none")
+    .attr("fill", "white")
+    .attr("stroke-width", 1.5)
+    .attr("r", NODE_RADIUS - 2);
+
 
   node
     .append("text")
