@@ -1,3 +1,5 @@
+import * as d3 from "https://cdn.skypack.dev/d3@7";
+
 const NODE_RADIUS = 5;
 const LOOP_RADIUS = 25;
 
