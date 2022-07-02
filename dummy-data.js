@@ -16,6 +16,7 @@ const data = {
     { source: "three", target: "three", type: "attenuates" },
     { source: "two", target: "two", type: "accelerates" },
     { source: "six", target: "four", type: "accelerates" },
+    { source: "six", target: "two", type: "accelerates" },
   ]
 };
 
