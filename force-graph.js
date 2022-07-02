@@ -6,14 +6,13 @@ const LOOP_RADIUS = 25;
 const linkArc = (d) => {
   const is_loop = d.target == d.source;
   const radius = is_loop ? LOOP_RADIUS : Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
-  const large_arc_flag = Number(is_loop);
-  const target_y = d.target.y - large_arc_flag;
+  // the tiny "- .1" is there to make the arc not be closed when it's a self-loop.
   return `
     M ${d.source.x},${d.source.y}
     A
       ${radius}, ${radius} 
-      0 ${large_arc_flag} 1 
-      ${d.target.x},${target_y}
+      0 ${Number(is_loop)} 1 
+      ${d.target.x},${d.target.y - .1}
   `;
 };
 
