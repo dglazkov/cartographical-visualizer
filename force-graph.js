@@ -69,7 +69,7 @@ function forceGraph(data, { width, height }) {
     .attr("orient", "auto")
     .append("path")
     .attr("fill", color)
-    .attr("d", "M0,-5L10,0L0,5");
+    .attr("d", "M0,-5 L10,0 L0,5 L3,0");
 
   const link = svg
     .append("g")
