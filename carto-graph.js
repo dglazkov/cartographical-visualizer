@@ -1,10 +1,18 @@
 import * as d3 from "https://cdn.skypack.dev/d3@7";
 
+const HTML = `
+<style>
+text {
+  cursor: pointer;
+  user-select: none;
+}
+</style>;`
+
 const NODE_RADIUS = 6;
 const LOOP_RADIUS = 35;
 const LINK_COLORS = {
-  'accelerates': 'green',
-  'attenuates': 'red',
+  'reinforces': 'green',
+  'funds': 'red',
 };
 const NODE_COLORS = {
   'ecosystem': 'blue',
@@ -114,7 +122,6 @@ function forceGraph(data, { width, height }) {
     .attr("stroke-width", 1.5)
     .attr("r", n => n.type == 'ecosystem' ? 0 : NODE_RADIUS - 3);
 
-
   node
     .append("text")
     .attr("x", 8)
@@ -163,6 +170,7 @@ class GraphElement extends HTMLElement {
       return;
 
     const shadow = this.attachShadow({ mode: 'open' });
+    shadow.innerHTML = HTML;
 
     const svg_node = forceGraph(data, {
       height: 400,
