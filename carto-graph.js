@@ -6,16 +6,18 @@ text {
   cursor: pointer;
   user-select: none;
 }
-</style>;`
+</style>`;
 
 const NODE_RADIUS = 6;
 const LOOP_RADIUS = 35;
 const LINK_COLORS = {
-  'reinforces': 'green',
-  'funds': 'red',
+  'setting': 'gray',
+  'vendor': 'BlueViolet',
+  'customer': 'magenta',
+  'relates': 'lightblue',
 };
 const NODE_COLORS = {
-  'ecosystem': 'blue',
+  'setting': 'blue',
   'product': 'gray',
 }
 
@@ -31,6 +33,12 @@ const linkArc = (d) => {
       ${d.target.x},${d.target.y - 1}
   `;
 };
+
+const linkLine = (d) => {
+  return `
+    M ${d.source.x},${d.source.y}
+    L ${d.target.x},${d.target.y}`;
+}
 
 const drag = (simulation) => {
   return d3
@@ -131,7 +139,7 @@ function forceGraph(data, { width, height }) {
     .lower()
     .attr("fill", "none")
     .attr("stroke", "white")
-    .attr("stroke-width", 3);
+    .attr("stroke-width", 4);
 
   simulation.on("tick", () => {
 
@@ -151,7 +159,7 @@ function forceGraph(data, { width, height }) {
     node
       .attr("transform", (d) => `translate(${setX(d)},${setY(d)})`);
 
-    link.attr("d", linkArc);
+    link.attr("d", linkLine);
 
   });
 
