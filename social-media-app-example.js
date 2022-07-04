@@ -1,51 +1,67 @@
 const data = {
   nodes: [
-    { id: "Social Media App", type: "setting" },
+    { id: "Social Media Platform", type: "setting" },
     { id: "Content", type: "product" },
     { id: "Creator Surface", type: "product" },
-    { id: "Viewer Surface", type: "product" },
+    { id: "Social Media PWA", type: "product" },
+    { id: "Social Media App", type: "product" },
     { id: "UI Framework", type: "product" },
     { id: "App Platform", type: "setting" },
     { id: "App Store", type: "product" },
-    { id: "App Developer Surface", type: "product" },
+    { id: "App Developer Kit", type: "product" },
     { id: "Web Platform", type: "setting" },
-    { id: "Web Viewing Surface", type: "product" },
-    { id: "Web Developer Surface", type: "product" },
+    { id: "Web Browser", type: "product" },
+    { id: "Web Platform APIs", type: "product" },
   ],
   links: [
     {
-      source: "Social Media App",
+      source: "App Developer Kit",
+      target: "UI Framework",
+      type: "setting"
+    },
+    {
+      source: "UI Framework",
+      target: "Social Media App",
+      type: "setting"
+    },
+    {
+      source: "UI Framework",
+      target: "Creator Surface",
+      type: "setting"
+    },
+    {
+      source: "Social Media Platform",
       target: "Content",
       type: "setting"
     },
     {
       source: "Web Platform",
-      target: "Creator Surface",
-      type: "setting"
-    },
-    {
-      source: "Web Platform",
-      target: "Viewer Surface",
+      target: "Social Media PWA",
       type: "setting"
     },
     {
       source: "Creator Surface",
-      target: "Social Media App",
+      target: "Social Media Platform",
       type: "vendor"
     },
     {
-      source: "Creator Surface",
-      target: "Viewer Surface",
-      type: "relates"
+      source: "Social Media PWA",
+      target: "Social Media Platform",
+      type: "customer"
     },
+    // {
+    //   source: "Creator Surface",
+    //   target: "Social Media App",
+    //   type: "relates"
+    // },
     {
-      source: "Viewer Surface",
-      target: "Social Media App",
+      source: "Social Media App",
+      target: "Social Media Platform",
       type: "customer"
     },
     {
       source: "App Platform",
-      target: "Viewer Surface",
+      target: "Social Media App",
       type: "setting",
     },
     {
@@ -53,28 +69,28 @@ const data = {
       target: "App Platform",
       type: "customer"
     },
+    // {
+    //   source: "App Developer Kit",
+    //   target: "App Store",
+    //   type: "relates"
+    // },
+    // {
+    //   source: "Web Platform APIs",
+    //   target: "Web Browser",
+    //   type: "relates"
+    // },
     {
-      source: "App Developer Surface",
-      target: "App Store",
-      type: "relates"
-    },
-    {
-      source: "Web Developer Surface",
-      target: "Web Viewing Surface",
-      type: "relates"
-    },
-    {
-      source: "App Developer Surface",
+      source: "App Developer Kit",
       target: "App Platform",
       type: "vendor"
     },
     {
-      source: "Web Viewing Surface",
+      source: "Web Browser",
       target: "Web Platform",
       type: "customer"
     },
     {
-      source: "Web Developer Surface",
+      source: "Web Platform APIs",
       target: "Web Platform",
       type: "vendor"
     },
