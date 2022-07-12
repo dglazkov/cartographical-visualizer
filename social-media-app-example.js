@@ -50,9 +50,9 @@ const data = {
       type: "customer"
     },
     // {
-    //   source: "Creator Surface",
-    //   target: "Social Media App",
-    //   type: "relates"
+    //   source: "App Developer Kit",
+    //   target: "Creator Surface",
+    //   type: "setting"
     // },
     {
       source: "Social Media App",
