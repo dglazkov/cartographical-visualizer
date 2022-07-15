@@ -1,0 +1,60 @@
+{
+  "nodes": [
+    {
+      "id": "tool",
+      "type": "product"
+    },
+    {
+      "id": "SDK",
+      "type": "product"
+    },
+    {
+      "id": "docs",
+      "type": "product"
+    },
+    {
+      "id": "App",
+      "type": "product"
+    },
+    {
+      "id": "App Store Connect",
+      "type": "product"
+    },
+    {
+      "id": "App Store",
+      "type": "product"
+    }
+  ],
+  "links": [
+    {
+      "source": "tool",
+      "target": "SDK",
+      "type": "I"
+    },
+    {
+      "source": "docs",
+      "target": "SDK",
+      "type": "I"
+    },
+    {
+      "source": "SDK",
+      "target": "App",
+      "type": "p"
+    },
+    {
+      "source": "App Store Connect",
+      "target": "App",
+      "type": "c"
+    },
+    {
+      "source": "App Store",
+      "target": "App Store Connect",
+      "type": "$"
+    },
+    {
+      "source": "App Store",
+      "target": "SDK",
+      "type": "$"
+    }
+  ]
+}

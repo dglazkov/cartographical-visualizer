@@ -1,0 +1,19 @@
+{
+  "nodes": [
+    {
+      "id": "scoop",
+      "type": "product"
+    },
+    {
+      "id": "ice cream",
+      "type": "product"
+    }
+  ],
+  "links": [
+    {
+      "source": "scoop",
+      "target": "ice cream",
+      "type": "P"
+    }
+  ]
+}

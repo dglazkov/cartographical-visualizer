@@ -8,7 +8,8 @@
 <body>
   <carto-graph></carto-graph>
   <script type="module">
-    import { data } from './social-media-app-example.js';
+    const url = 'data/structure-example-scoop.json';
+    const data = await (await fetch(url)).json();
 
     document.querySelector('carto-graph').draw(data);
   </script>
