@@ -50,7 +50,6 @@ class CustomerVendorLoop extends LitElement {
 class CircleElement extends LitElement {
   static styles = css`
   circle { 
-    fill: var(--fill);
     stroke: none; 
   }
   
