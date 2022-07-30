@@ -40,8 +40,42 @@ class CustomerVendorLoop extends LitElement {
         <circle class="stock" cx="255" cy="255" r="40" />
         <circle class="stock" cx="45" cy="255" r="40" />
       </g>
+      <foreignObject x="100" y="100" width="100" height="100">
+        <div><slot></slot></div>
+      </foreignObject>
+</svg>`;
+  }
+}
+
+class CircleElement extends LitElement {
+  static styles = css`
+  circle { 
+    fill: var(--fill);
+    stroke: none; 
+  }
+  
+  div.flex {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    text-align: center;
+  }
+  `;
+
+  constructor() {
+    super();
+  }
+
+  render() {
+    return html`
+    <svg>
+      <circle cx="50" cy="50" r="50" />
+      <foreignObject x="15" y="15" width="70" height="70">
+        <div class="flex"><slot></slot></div>
+      </foreignObject>
     </svg>`;
   }
 }
 
 customElements.define('customer-vendor-loop', CustomerVendorLoop);
+customElements.define('my-circle', CircleElement);
