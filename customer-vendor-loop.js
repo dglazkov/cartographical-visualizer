@@ -33,16 +33,16 @@ class CustomerVendorLoop extends LitElement {
   render() {
     return html`
     <svg viewBox="0 0 300 300">
+      <foreignObject x="100" y="100" width="100" height="100">
+        <slot></slot>
+      </foreignObject>
       <g>
         <circle class="flow" cx="150" cy="150" r="150" />
-        <circle class="stock" cx="45" cy="45" r="40" />
-        <circle class="stock" cx="255" cy="45" r="40" />
-        <circle class="stock" cx="255" cy="255" r="40" />
-        <circle class="stock" cx="45" cy="255" r="40" />
+        <circle class="stock" cx="45" cy="45" r="60" />
+        <circle class="stock" cx="255" cy="45" r="60" />
+        <circle class="stock" cx="255" cy="255" r="60" />
+        <circle class="stock" cx="45" cy="255" r="60" />
       </g>
-      <foreignObject x="100" y="100" width="100" height="100">
-        <div><slot></slot></div>
-      </foreignObject>
 </svg>`;
   }
 }
