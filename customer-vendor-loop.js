@@ -1,76 +1,69 @@
-import { LitElement, html, svg, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@2.2.7/all/lit-all.min.js'
+import { LitElement, html, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@2.2.7/all/lit-all.min.js';
+import { forceSimulation, forceManyBody, forceCenter, forceCollide } from 'https://cdn.skypack.dev/d3-force@3';
 
-class CustomerVendorLoop extends LitElement {
-  static styles = css`
-    circle.stock { 
-      cursor: pointer;
-      fill: white;
-      stroke: none; 
-    }
-    
-    circle.flow { 
-      cursor: pointer;
-      fill: none;
-      stroke: magenta;
-      stroke-width: 3px;
-    }
-    
-    g {
-      transform: scale(0.5) translate(150px, 150px);
-    }`;
+const ITEM_SIZE = css`100px`;
 
-  // static properties = {
-  //   name: {type: String},
-  // };
-
+class CanvasElement extends LitElement {
   constructor() {
     super();
   }
-  
+
+  connectedCallback() {
+    const nodes = [...this.children];
+    forceSimulation(nodes)
+      .force("manyBody", forceManyBody().strength(-20))
+      .force("center", forceCenter().x(400).y(300))
+      .force('collide', forceCollide(50));
+  }
+
   render() {
-    return html`
-    <svg viewBox="0 0 300 300">
-      <foreignObject x="100" y="100" width="100" height="100">
-        <slot></slot>
-      </foreignObject>
-      <g>
-        <circle class="flow" cx="150" cy="150" r="150" />
-        <circle class="stock" cx="45" cy="45" r="60" />
-        <circle class="stock" cx="255" cy="45" r="60" />
-        <circle class="stock" cx="255" cy="255" r="60" />
-        <circle class="stock" cx="45" cy="255" r="60" />
-      </g>
-    </svg>`;
+    return html`<slot></slot>`;
   }
 }
 
-class CircleElement extends LitElement {
+class ProductElement extends LitElement {
   static styles = css`
+  :host {
+    position: absolute;
+    width: ${ITEM_SIZE};
+  }
+
   circle { 
     stroke: none; 
   }
   
-  div.flex {
+  div {
     display: flex;
     height: 100%;
     align-items: center;
     text-align: center;
+    justify-content: center;   
   }`;
+
+  static properties = {
+    x: { type: Number },
+    y: { type: Number },
+  }
 
   constructor() {
     super();
-  }
+    this.x = 0;
+    this.y = 0;
+}
 
   render() {
     return html`
-    <svg>
+    <style> :host { 
+      transform: translate(${this.x}px, ${this.y}px); 
+    } </style>
+    <svg viewBox="0 0 100 100">
       <circle cx="50" cy="50" r="50" />
       <foreignObject x="15" y="15" width="70" height="70">
-        <div class="flex"><slot></slot></div>
+        <div><slot></slot></div>
       </foreignObject>
     </svg>`;
   }
 }
 
-customElements.define('customer-vendor-loop', CustomerVendorLoop);
-customElements.define('my-circle', CircleElement);
+customElements.define('oc-product', ProductElement);
+customElements.define('oc-canvas', CanvasElement)
