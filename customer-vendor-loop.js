@@ -4,20 +4,26 @@ import { forceSimulation, forceManyBody, forceCenter, forceCollide } from 'https
 const ITEM_SIZE = css`100px`;
 
 class CanvasElement extends LitElement {
+  static properties = {
+    links: { type: Array }
+  }
+
   constructor() {
     super();
   }
 
-  connectedCallback() {
-    const nodes = [...this.children];
-    forceSimulation(nodes)
-      .force("manyBody", forceManyBody().strength(-20))
-      .force("center", forceCenter().x(400).y(300))
+  nodeSlotChanged(event) {
+    forceSimulation(event.target.assignedElements())
+      .force('manyBody', forceManyBody().strength(-20))
+      .force('center', forceCenter().x(400).y(300))
       .force('collide', forceCollide(50));
   }
 
   render() {
-    return html`<slot></slot>`;
+    return html`
+    <slot name="links"></slot>
+    <slot @slotchange=${this.nodeSlotChanged} name="nodes"></slot>
+    `;
   }
 }
 
@@ -26,10 +32,6 @@ class ProductElement extends LitElement {
   :host {
     position: absolute;
     width: ${ITEM_SIZE};
-  }
-
-  circle { 
-    stroke: none; 
   }
   
   div {
@@ -43,6 +45,7 @@ class ProductElement extends LitElement {
   static properties = {
     x: { type: Number },
     y: { type: Number },
+    name: { type: String },
   }
 
   constructor() {
@@ -53,9 +56,11 @@ class ProductElement extends LitElement {
 
   render() {
     return html`
-    <style> :host { 
-      transform: translate(${this.x}px, ${this.y}px); 
-    } </style>
+    <style>
+      :host { 
+        transform: translate(${this.x}px, ${this.y}px) 
+      } 
+    </style>
     <svg viewBox="0 0 100 100">
       <circle cx="50" cy="50" r="50" />
       <foreignObject x="15" y="15" width="70" height="70">
@@ -65,5 +70,33 @@ class ProductElement extends LitElement {
   }
 }
 
+class LinkElement extends LitElement {
+  static properties = {
+    source: { type: String },
+    target: { type: String },
+    type: { type: String },
+  }
+
+  static styles = css`
+  :host {
+    position: absolute;
+    width: 100%;
+  }
+  `;
+
+  constructor() {
+    super();
+  }
+
+  render() {
+    return html`
+    <svg viewBox="0 0 100 100">
+      <path d="M 0 0 L 100 100" stroke="gray" stroke-width="1"></path>
+    </svg>
+    `;
+  }
+}
+
 customElements.define('oc-product', ProductElement);
-customElements.define('oc-canvas', CanvasElement)
+customElements.define('oc-canvas', CanvasElement);
+customElements.define('oc-link', LinkElement);

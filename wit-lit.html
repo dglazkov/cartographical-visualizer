@@ -9,19 +9,34 @@
   } 
 </style>
 <script type="module" src="customer-vendor-loop.js"></script>
-<script type="module">
+<!-- <script type="module">
   import { render, html } from 'https://cdn.jsdelivr.net/gh/lit/dist@2.2.7/all/lit-all.min.js';
 
   const url = 'data/structure-example-2.json';
   const data = await (await fetch(url)).json();
 
-  const canvas = html`
+  render(html`
     <oc-canvas>
       ${ data.nodes.map(node => 
-        html`<oc-product>${node.id}</oc-product>`)
+        html`<oc-product
+          name="${node.id}" 
+          slot="nodes">${node.id}</oc-product>`)
       }
-    </oc-canvas>`; 
-
-  render(canvas, document.body);
-
-</script>
+      ${ data.links.map(link =>
+        html`<oc-link
+          source="${link.source}"
+          target="${link.target}"
+          type="${link.type}"
+          slot="links"></oc-link>`)
+      }
+    </oc-canvas>`, document.body);
+</script> -->
+<oc-canvas>
+  <oc-product slot="nodes" id="swift">Swift</oc-product>
+  <oc-product slot="nodes" id="sdk" hires="swift">SDK</oc-product>
+  <oc-product slot="nodes" id="app-platform" hires="sdk app-store-connect">App Platform</oc-product>
+  <oc-product slot="nodes" id="app-developer" hires="app-platform">App Developer</oc-product>
+  <oc-product slot="nodes" id="app-store-connect">App Store Connect</oc-product>
+  <oc-product slot="nodes" id="app-store" hires="app-platform">App Store</oc-product>
+  <oc-product slot="nodes" id="app-user" hires="app-store">App User</oc-product>
+</oc-canvas>
