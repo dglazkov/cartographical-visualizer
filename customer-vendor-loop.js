@@ -33,14 +33,13 @@ class CanvasElement extends LitElement {
   nodeSlotChanged(event) {
     const nodes = event.target.assignedElements();
     this._links = [];
-    nodes.forEach(node => {
-      node.hires.forEach(hireLink => {
+    nodes.forEach(node =>
+      node.hires.forEach(link =>
         this._links.push({
           source: node.id,
-          target: hireLink
-        });
-      })
-    });
+          target: link
+        })
+    ));
     forceSimulation(nodes)
       .force('manyBody', forceManyBody().strength(-300))
       .force('center', forceCenter().x(400).y(300))
@@ -55,7 +54,7 @@ class CanvasElement extends LitElement {
       ${this._links.map(link => svg`
         <path d="M ${link.source.x} ${link.source.y} L ${link.target.x} ${link.target.y}"/>`)}
     </svg>
-    <slot @slotchange=${this.nodeSlotChanged} name="nodes"></slot>
+    <slot @slotchange=${this.nodeSlotChanged}></slot>
     `;
   }
 }
