@@ -46,7 +46,6 @@ class CanvasElement extends LitElement {
         });
       })
     });
-    console.log('links', this._links);
     forceSimulation(nodes)
       .force('manyBody', forceManyBody().strength(-300))
       .force('center', forceCenter().x(400).y(300))
