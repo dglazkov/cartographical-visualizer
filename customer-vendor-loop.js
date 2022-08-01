@@ -8,7 +8,7 @@ import {
 } from 'https://cdn.skypack.dev/d3-force@3';
 
 const ITEM_RADIUS = 50;
-const ITEM_SIZE_CSS = css`${ITEM_RADIUS*2}px`;
+const ITEM_SIZE_CSS = css`${ITEM_RADIUS * 2}px`;
 const ITEM_RADIUS_CSS = css`${ITEM_RADIUS}px`;
 
 class CanvasElement extends LitElement {
@@ -18,11 +18,6 @@ class CanvasElement extends LitElement {
       width: 100%;
       height: 100%;
       transform: translate(${ITEM_RADIUS_CSS}, ${ITEM_RADIUS_CSS});
-    }
-    
-    path {
-      stroke-width: 2;
-      stroke: gray;
     }
   `;
 
