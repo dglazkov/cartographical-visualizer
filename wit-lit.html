@@ -13,28 +13,6 @@
   }
 </style>
 <script type="module" src="customer-vendor-loop.js"></script>
-<!-- <script type="module">
-  import { render, html } from 'https://cdn.jsdelivr.net/gh/lit/dist@2.2.7/all/lit-all.min.js';
-
-  const url = 'data/structure-example-2.json';
-  const data = await (await fetch(url)).json();
-
-  render(html`
-    <oc-canvas>
-      ${ data.nodes.map(node => 
-        html`<oc-product
-          name="${node.id}" 
-          slot="nodes">${node.id}</oc-product>`)
-      }
-      ${ data.links.map(link =>
-        html`<oc-link
-          source="${link.source}"
-          target="${link.target}"
-          type="${link.type}"
-          slot="links"></oc-link>`)
-      }
-    </oc-canvas>`, document.body);
-</script> -->
 <oc-canvas>
   <oc-product slot="nodes" id="swift">Swift</oc-product>
   <oc-product slot="nodes" id="sdk" hires="swift">SDK</oc-product>

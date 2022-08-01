@@ -19,6 +19,11 @@ class CanvasElement extends LitElement {
       height: 100%;
       transform: translate(${ITEM_RADIUS_CSS}, ${ITEM_RADIUS_CSS});
     }
+    
+    path {
+      stroke-width: 2;
+      stroke: gray;
+    }
   `;
 
   static properties = {
@@ -54,7 +59,7 @@ class CanvasElement extends LitElement {
     return html`
     <svg>
       ${this._links.map(link => svg`
-        <path d="M ${link.source.x} ${link.source.y} L ${link.target.x} ${link.target.y}" stroke="grey"></path>`)}
+        <path d="M ${link.source.x} ${link.source.y} L ${link.target.x} ${link.target.y}"/>`)}
     </svg>
     <slot @slotchange=${this.nodeSlotChanged} name="nodes"></slot>
     `;
@@ -81,11 +86,9 @@ class ProductElement extends LitElement {
     y: { type: Number },
     hires: {
       converter: {
-        fromAttribute: (value, type) => {
-          return value.split(' ');
-        }
+        fromAttribute: value => value.split(' ')
       }
-    },
+    }
   }
 
   constructor() {
