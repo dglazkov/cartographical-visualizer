@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <style> 
   html, body { margin: 0 }
-  oc-product {
+  oc-product, oc-platform {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 14px;
     color: white;
-    fill: rgb(91, 155, 187);
-  } 
+    fill: rgb(39, 111, 147);
+  }
+
+  oc-platform {
+    fill: rgb(65, 122, 28);
+  }
 </style>
 <script type="module" src="customer-vendor-loop.js"></script>
 <!-- <script type="module">
@@ -34,9 +38,9 @@
 <oc-canvas>
   <oc-product slot="nodes" id="swift">Swift</oc-product>
   <oc-product slot="nodes" id="sdk" hires="swift">SDK</oc-product>
-  <oc-product slot="nodes" id="app-platform" hires="sdk app-store-connect">App Platform</oc-product>
+  <oc-platform slot="nodes" id="app-platform" hires="sdk app-store-connect"><b>App</b> Platform</oc-platform>
   <oc-product slot="nodes" id="app-developer" hires="app-platform">App Developer</oc-product>
   <oc-product slot="nodes" id="app-store-connect">App Store Connect</oc-product>
-  <oc-product slot="nodes" id="app-store" hires="app-platform">App Store</oc-product>
+  <oc-platform slot="nodes" id="app-store" hires="app-platform">App Store</oc-platform>
   <oc-product slot="nodes" id="app-user" hires="app-store">App User</oc-product>
 </oc-canvas>
