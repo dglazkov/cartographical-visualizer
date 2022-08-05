@@ -164,7 +164,7 @@ class CanvasElement extends LitElement {
         ${this._links.map(link => svg`
           <path d="M ${link.source.x} ${link.source.y} L ${link.target.x} ${link.target.y}"/>`)}
         </g>
-        <foreignObject width="100%" height="100%">
+        <foreignObject width="1000%" height="1000%">
           <slot @slotchange=${this.nodeSlotChanged}></slot>
         </foreignObject>
       </g>
