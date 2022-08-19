@@ -130,7 +130,13 @@ class CanvasElement extends LitElement {
       [this.px, this.py] = getPointerCoords(e.clientX, e.clientY);
   
       e.preventDefault();
-    });  
+    });
+    this.addEventListener('wheel', e => {
+      if (e.ctrlKey) {
+        this.zoom -= e.deltaY * 0.01;
+      }
+      e.preventDefault();
+    });
   }
 
   nodeSlotChanged(event) {
