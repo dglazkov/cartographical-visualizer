@@ -74,6 +74,11 @@ class CanvasElement extends LitElement {
     g#links {
       transform: translate(${ITEM_RADIUS_CSS}, ${ITEM_RADIUS_CSS});
     }
+
+    foreignObject {
+      display: flex;
+      align-items: stretch;
+    }
   `;
 
   static properties = {
@@ -96,7 +101,7 @@ class CanvasElement extends LitElement {
 
     const getPointerCoords = (x, y) => {
       return [x - x_offset, y - y_offset];
-    }  
+    }
 
     this.addEventListener('pointerdown', e => {
       if (e.target != this) return;
@@ -104,31 +109,31 @@ class CanvasElement extends LitElement {
       let x, y;
       x_offset = 0;
       y_offset = 0;
-  
+
       panning = true;
-  
+
       [x, y] = getPointerCoords(e.clientX, e.clientY);
       x_offset = x - this.px;
       y_offset = y - this.py;
       [this.px, this.py] =
         getPointerCoords(e.clientX, e.clientY);
-  
+
       e.preventDefault();
     });
     this.addEventListener('pointermove', e => {
       if (!panning) return;
-  
+
       [this.px, this.py] =
         getPointerCoords(e.clientX, e.clientY);
-  
+
       e.preventDefault();
     });
     this.addEventListener('pointerup', e => {
       if (!panning) return;
       panning = false;
-  
+
       [this.px, this.py] = getPointerCoords(e.clientX, e.clientY);
-  
+
       e.preventDefault();
     });
     this.addEventListener('wheel', e => {
@@ -170,8 +175,10 @@ class CanvasElement extends LitElement {
         ${this._links.map(link => svg`
           <path d="M ${link.source.x} ${link.source.y} L ${link.target.x} ${link.target.y}"/>`)}
         </g>
-        <foreignObject width="1000%" height="1000%">
-          <slot @slotchange=${this.nodeSlotChanged}></slot>
+        <foreignObject x="${-this.px}" y="${-this.py}" width="1000%" height="1000%">
+          <div style="transform: translate(${this.px}px, ${this.py}px);">
+            <slot @slotchange=${this.nodeSlotChanged}></slot>
+          </div>
         </foreignObject>
       </g>
     </svg>
